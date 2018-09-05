@@ -6,7 +6,14 @@ const users = require("./routes/api/users");
 const posts = require("./routes/api/posts");
 const profile = require("./routes/api/profile");
 
+//load middleware
+const bodyParser = require("body-parser");
+
 const app = express();
+
+//middleware
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
 
 mongoose.connect(DB).then(() => console.log("MongoDB Connected"));
 
