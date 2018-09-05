@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 
 const bcrypt = require("bcryptjs");
+const passport = require("passport");
 
 //JWT
 const jwt = require("jsonwebtoken");
@@ -16,7 +17,6 @@ const User = require("../../models/User");
 router.get("/test", (req, res) => {
   res.json({ msg: "user route works" });
 });
-
 
 //@route  GET    api/users/register
 //@access Test   user route
@@ -83,5 +83,28 @@ router.post("/login", async (req, res) => {
     res.json({ msg: "sorry, something went wrong" });
   }
 });
+
+/**
+ * @route  GET    api/users/current
+ * @desc   return current user
+ * @access  Private
+ **/
+
+router.get(
+  "/current",
+  passport.authenticate("jwt", { session: false }),
+  async (req, res) => {
+    try {
+      res.json({
+        id: req.user.id,
+        name: req.user.name,
+        email: req.user.email,
+        userImage: req.user.userImage
+      });
+    } catch (error) {
+      res.status(400).json({ msg: error });
+    }
+  }
+);
 
 module.exports = router;
