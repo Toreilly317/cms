@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
 const UserSchema = new Schema({
-  name: {
+  firstName: {
     type: String,
     required: true
   },
@@ -12,19 +12,22 @@ const UserSchema = new Schema({
   },
   email: {
     type: String,
-    required: true,
+    required: true
   },
   password: {
     type: String,
-    equired: true
+    required: true
   },
-  userImage: {
-    type: String,
-    default: "/assets/images/system/defaultUser.png"
+  profileImg: {
+    type: String
   },
   date: {
     type: Date,
     default: Date.now
+  },
+  permission: {
+    type: String,
+    required: true
   }
 });
 

@@ -16,7 +16,13 @@ const app = express();
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
-mongoose.connect(DB).then(() => console.log("MongoDB Connected"));
+///connect to DB
+mongoose
+  .connect(
+    DB,
+    { useNewUrlParser: true }
+  )
+  .then(() => console.log("Connected to database"));
 
 app.get("/", (req, res) => {
   res.send("hello");

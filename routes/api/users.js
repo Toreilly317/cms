@@ -11,99 +11,119 @@ const secretOrKey = require("../../config/keys").secretOrKey;
 //load user model
 const User = require("../../models/User");
 
-//@route  GET    api/users/test
-//@access Test   user route
-//@access Public
-router.get("/test", (req, res) => {
-  res.json({ msg: "user route works" });
-});
+//validation
+const validateRegistration = require("../../validation/register");
+const validateLogin = require("../../validation/login");
 
-//@route  GET    api/users/register
-//@access Test   user route
-//@access Public
-router.post("/register", async (req, res) => {
-  try {
-    const user = await User.findOne({ email: req.body.email });
+// @route   GET api/users/register
+// @desc    Register user
+// @access  Public
+router.post("/register", (req, res) => {
+  const { errors, isValid } = validateRegistration(req.body);
 
-    //if user found with same email
+  // Check Validation
+  if (!isValid) {
+    return res.status(400).json(errors);
+  }
+
+  User.findOne({ email: req.body.email }).then(user => {
     if (user) {
-      return res.status(400).json({ err: "email already exists" });
-    } else {
-      const newUser = new User(
-        ({ name, email, password, userImage } = { ...req.body })
-      );
-
-      bcrypt.genSalt(10, (err, salt) => {
-        bcrypt.hash(newUser.password, salt, async (err, hash) => {
-          if (err) {
-            console.error(err);
-          } else {
-            newUser.password = hash;
-            const savedUser = await newUser.save();
-            res.json({ savedUser });
-          }
-        });
-      });
+      errors.email = "Email already exists";
+      return res.status(400).json(errors);
     }
-  } catch (error) {
-    console.log(error);
-  }
-});
 
-//@route  POST    api/users/register
-//@desc   Login user / gen JWT
-//@access Public
-router.post("/login", async (req, res) => {
-  const { email, password } = req.body;
-  const user = await User.findOne({ email });
-  if (!user) {
-    return res
-      .status(404)
-      .json({ msg: "No user found with this email address." });
-  }
+    const collectIsEmpty = User.estimatedDocumentCount() === 0;
+    if (collectionIsEmpty) {
+      req.body.permission = "ADMIN";
+    }
 
-  //if user check PW
-  const passwordMatched = await bcrypt.compare(password, user.password);
-  if (passwordMatched) {
-    const payload = {
-      id: user.id,
-      name: user.name,
-      userImage: user.userImage,
-      permission: user.permission
-    };
+    const newUser = new User(
+      ({
+        name,
+        email,
+        profileImage,
+        password: req.body.password,
+        permission: req.body.permission
+      } = {
+        ...req.body
+      })
+    );
 
-    jwt.sign(payload, secretOrKey, { expiresIn: 3600 }, (err, token) => {
-      res.json({
-        success: true,
-        payload,
-        token: `Bearer ${token}`
+    bcrypt.genSalt(10, (err, salt) => {
+      bcrypt.hash(newUser.password, salt, (err, hash) => {
+        if (err) throw err;
+        newUser.password = hash;
+        newUser
+          .save()
+          .then(user => res.json(user))
+          .catch(err => console.log(err));
       });
     });
-  } else {
-    res.json({ msg: "sorry, something went wrong" });
-  }
+  });
 });
 
-/**
- * @route  GET    api/users/current
- * @desc   return current user
- * @access  Private
- **/
+// @route   GET api/users/login
+// @desc    Login User / Returning JWT Token
+// @access  Public
+router.post("/login", (req, res) => {
+  const { errors, isValid } = validateLogin(req.body);
 
+  // Check Validation
+  if (!isValid) {
+    return res.status(400).json(errors);
+  }
+
+  const email = req.body.email;
+  const password = req.body.password;
+
+  // Find user by email
+  User.findOne({ email }).then(user => {
+    // Check for user
+    if (!user) {
+      errors.email = "User not found";
+      return res.status(404).json(errors);
+    }
+
+    // Check Password
+    bcrypt.compare(password, user.password).then(isMatch => {
+      if (isMatch) {
+        // User Matched
+        const payload = {
+          id: user.id,
+          firstName: user.firstName,
+          lastName: user.lastName,
+          email: user.email
+        }; // Create JWT Payload
+
+        // Sign Token
+        jwt.sign(payload, secretOrKey, { expiresIn: 3600 }, (err, token) => {
+          res.json({
+            success: true,
+            token: "Bearer " + token
+          });
+        });
+      } else {
+        errors.password = "Password incorrect";
+        return res.status(400).json(errors);
+      }
+    });
+  });
+});
+
+// @route   GET api/users/current
+// @desc    Return current user
+// @access  Private
 router.get(
   "/current",
   passport.authenticate("jwt", { session: false }),
-  async (req, res) => {
-    try {
-      res.json({
-        id: req.user.id,
-        name: req.user.name,
-        email: req.user.email,
-        userImage: req.user.userImage
-      });
-    } catch (error) {
-      res.status(400).json({ msg: error });
-    }
+  (req, res) => {
+    res.json({
+      id: req.user.id,
+      firstName: req.user.firstName,
+      firstName: req.user.lastName,
+      email: req.user.email,
+      date: req.user.date
+    });
   }
 );
 
