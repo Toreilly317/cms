@@ -18,7 +18,7 @@ const validateLogin = require("../../validation/login");
 // @route   GET api/users/register
 // @desc    Register user
 // @access  Public
-router.post("/register", (req, res) => {
+router.post("/register", async (req, res) => {
   const { errors, isValid } = validateRegistration(req.body);
 
   // Check Validation
@@ -26,15 +26,15 @@ router.post("/register", (req, res) => {
     return res.status(400).json(errors);
   }
 
+  const adminExists = await User.findOne({ permission: "ADMIN" });
+  if (!adminExists) {
+    req.body.permission = "admin";
+  }
+
   User.findOne({ email: req.body.email }).then(user => {
     if (user) {
       errors.email = "Email already exists";
       return res.status(400).json(errors);
-    }
-
-    const collectIsEmpty = User.estimatedDocumentCount() === 0;
-    if (collectionIsEmpty) {
-      req.body.permission = "ADMIN";
     }
 
     const newUser = new User(
