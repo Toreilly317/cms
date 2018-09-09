@@ -2,17 +2,13 @@ const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
 const PostSchema = new Schema({
-  user: {
+  owner: {
     type: Schema.Types.ObjectId,
     ref: "users"
   },
   text: {
     type: String,
     required: true
-  },
-  user: {
-    type: Schema.Types.ObjectId,
-    ref: "users"
   },
   name: {
     type: String
@@ -48,9 +44,17 @@ const PostSchema = new Schema({
       profileImage: {
         type: String
       },
-      date: {
+      createdAt: {
         type: Date,
         default: Date.now
+      },
+      lastUpdated: {
+        type: Date,
+        default: Date.now
+      },
+      status: {
+        type: String,
+        default: "unpublished"
       }
     }
   ]
