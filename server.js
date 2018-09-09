@@ -16,6 +16,12 @@ const app = express();
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
+//!CLEAR USER "TABLE"
+//!THIS SHOULD ONLY BE DONE WHEN YOU KNOW YOU NEED TO DO IT
+
+const __RESET_USERS_AND_POSTS__ = require("./utils/resetUsersAndPosts");
+__RESET_USERS_AND_POSTS__(false);
+
 ///connect to DB
 mongoose
   .connect(
@@ -35,7 +41,7 @@ require("./config/passport")(passport);
 
 //use routes
 app.use("/api/users", users);
-app.use("api/posts", posts);
+app.use("/api/posts", posts);
 app.use("/api/profile", profile);
 
 const PORT = process.env.PORT || 5000;
