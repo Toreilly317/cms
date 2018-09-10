@@ -1,7 +1,6 @@
 
 
-//post routes
-//profile routes
-//admin routes
-//config routes
+add permission roles. This will most likely be best suited for express middleware
+research charting libraries Charts.js chartist etc
+
 

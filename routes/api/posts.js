@@ -6,8 +6,7 @@ const passport = require("passport");
 const Post = require("../../models/Post");
 const Profile = require("../../models/Profile");
 
-//utils
-const cleanPromise = require("../../utils/cleanPromise");
+
 
 //validation
 const validatePostData = require("../../validation/post");
