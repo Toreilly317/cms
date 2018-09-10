@@ -2,59 +2,80 @@ const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
 const PostSchema = new Schema({
+  /* MAIN POST INFO */
   owner: {
     type: Schema.Types.ObjectId,
     ref: "users"
   },
+
   text: {
     type: String,
     required: true
   },
-  name: {
-    type: String
-  },
-  profileImage: {
-    type: String
-  },
-  likes: [
-    {
-      user: {
-        type: Schema.Types.ObjectId,
-        ref: "users"
-      }
-    }
-  ],
-  date: {
+
+  createdAt: {
     type: Date,
     default: Date.now
   },
+
+  images: {
+    featured: { type: String },
+    thumbnails: { type: String }
+  },
+
+  lastUpdated: {
+    type: Date,
+    default: Date.now
+  },
+
+  lastUpdatedBy: {
+    type: Schema.Types.ObjectId,
+    ref: "users"
+  },
+
+  status: {
+    type: String,
+    enum: [
+      "published",
+      "awaiting approval",
+      "revisions needed",
+      "draft",
+      "deleted"
+    ],
+    default: "draft"
+  },
+
+  /* META */
+  tags: {
+    type: [String]
+  },
+
+  slug: {
+    type: String
+  },
+
+  /* COMMENTS AND LIKES */
   comments: [
     {
       user: {
         type: Schema.Types.ObjectId,
         ref: "users"
       },
+      title: {
+        type: String,
+        require: true
+      },
       text: {
         type: String,
         required: true
-      },
-      name: {
-        type: String
-      },
-      profileImage: {
-        type: String
-      },
-      createdAt: {
-        type: Date,
-        default: Date.now
-      },
-      lastUpdated: {
-        type: Date,
-        default: Date.now
-      },
-      status: {
-        type: String,
-        default: "unpublished"
+      }
+    }
+  ],
+  likes: [
+    {
+      user: {
+        type: Schema.Types.ObjectId,
+        ref: "users"
       }
     }
   ]
