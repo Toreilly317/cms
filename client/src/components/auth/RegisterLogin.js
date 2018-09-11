@@ -47,38 +47,40 @@ class RegisterLogin extends Component {
   render() {
     return (
       <div className="flex-container">
-        <form className="login-form" onSubmit={e => this.handleSubmit(e)}>
-          <input
-            type="text"
-            name="fullName"
-            value={this.state.fullName}
-            onChange={e => this.handleChange(e)}
-            placeholder="First &amp; Last Name"
-          />
+        <div className="container">
+          <form className="login-form" onSubmit={e => this.handleSubmit(e)}>
+            <input
+              type="text"
+              name="fullName"
+              value={this.state.fullName}
+              onChange={e => this.handleChange(e)}
+              placeholder="First &amp; Last Name"
+            />
 
-          <input
-            type="email"
-            name="email"
-            value={this.state.email}
-            onChange={e => this.handleChange(e)}
-            placeholder="Email"
-          />
-          <input
-            type="password"
-            name="password"
-            value={this.state.password}
-            onChange={e => this.handleChange(e)}
-            placeholder="Password"
-          />
-          <input
-            type="password"
-            name="password2"
-            value={this.state.password2}
-            onChange={e => this.handleChange(e)}
-            placeholder="Confirm Password"
-          />
-          <button className="btn">Register</button>
-        </form>
+            <input
+              type="email"
+              name="email"
+              value={this.state.email}
+              onChange={e => this.handleChange(e)}
+              placeholder="Email"
+            />
+            <input
+              type="password"
+              name="password"
+              value={this.state.password}
+              onChange={e => this.handleChange(e)}
+              placeholder="Password"
+            />
+            <input
+              type="password"
+              name="password2"
+              value={this.state.password2}
+              onChange={e => this.handleChange(e)}
+              placeholder="Confirm Password"
+            />
+            <button className="btn">Register</button>
+          </form>
+        </div>
       </div>
     );
   }
