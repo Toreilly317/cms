@@ -1,12 +1,14 @@
-import React, { Component } from 'react';
-import './App.css';
+import React, { Component } from "react";
+import "./App.css";
+import { BrowserRouter, Route } from "react-router-dom";
+import RegisterLogin from "./components/auth/RegisterLogin";
 
 class App extends Component {
   render() {
     return (
-      <div className="App">
-        <h1>My React App</h1>
-      </div>
+      <BrowserRouter>
+        <Route path="/admin-dashboard" component={RegisterLogin} />
+      </BrowserRouter>
     );
   }
 }
