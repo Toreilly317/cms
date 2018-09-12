@@ -4,10 +4,27 @@
   --color-blue: #457b9d;
   --color-blue-light: #a8dadc;
   --color-blue-dark: #1d3557;
+  --font-primary: "Open Sans", sans-serif;
+  --font-secondary: "Noto Serif JP", sans-serif;
 
   --shadow-dark: 0 2rem 6rem rgba(0, 0, 0, 0.3);
   --shadow-light: 0 2rem 5rem rgba(0, 0, 0, 0.06);
   --line: 1px solid var(--color-grey-light-2);
+}
+
+p,
+span,
+li {
+  font-family: var(--font-primary);
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: var(--font-secondary);
 }
 
 * {
@@ -108,13 +125,18 @@ body {
 }
 
 .sidebar-item {
+  font-family: var(--font-secondary);
   padding: 2rem 4rem 1rem;
   width: 100%;
   font-weight: 700;
-  font-size: 1.2rem;
+  font-size: 1.8rem;
   color: var(--color-blue-light);
   text-transform: uppercase;
   margin: 0 auto;
+  text-decoration: none;
+}
+.sidebar-item:visited {
+  color: currentColor;
 }
 
 /* LOGIN PAGE */
@@ -124,16 +146,15 @@ body {
   justify-content: center;
   height: 100vh;
   width: 100vw;
-  background: url("./assets//img/background.jpg");
+  background: url("./assets//img/bg1.png");
   background-position: center;
   background-size: cover;
 }
 
 .login-form {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(200px, min-content));
+  grid-template-columns: 1fr;
 
-  border: 5px solid yellow;
   border-radius: 2px;
   position: relative;
 
@@ -149,8 +170,8 @@ body {
   left: 0px;
   width: 100%;
   height: 100%;
-  background: rebeccapurple;
-  opacity: 0.6;
+  background: black;
+  opacity: 0.5;
   filter: blur(5px);
   overflow: hidden;
 
@@ -237,6 +258,6 @@ input:hover {
     filter: drop-shadow(0px 1px 0px hotpink);
   }
   100% {
-    filter: drop-shadow(0px 4px 4px hotpink);
+    filter: drop-shadow(0px 1px 4px hotpink);
   }
 }
