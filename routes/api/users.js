@@ -15,6 +15,10 @@ const User = require("../../models/User");
 const validateRegistration = require("../../validation/register");
 const validateLogin = require("../../validation/login");
 
+router.get("/test", (req, res) => {
+  res.json({ msg: "ok" });
+});
+
 // @route   GET api/users/register
 // @desc    Register user
 // @access  Public
@@ -66,7 +70,6 @@ router.post("/register", async (req, res) => {
 // @desc    Login User / Returning JWT Token
 // @access  Public
 router.post("/login", (req, res) => {
-  console.log(req.body)
   const { errors, isValid } = validateLogin(req.body);
 
   // Check Validation

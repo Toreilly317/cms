@@ -1,21 +1,22 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-
-//
+import { withRouter } from "react-router";
 import { registerUser } from "../../actions/authActions";
+import {
+  Button,
+  Form,
+  Grid,
+  Header,
+  Image,
+  Message,
+  Segment
+} from "semantic-ui-react";
 
-class RegisterLogin extends Component {
-  constructor(props) {
-    super();
-    this.state = {
-      fullName: "",
-
-      email: "",
-      password: "",
-      password2: "",
-      errors: {}
-    };
-  }
+class Login extends Component {
+  state = {
+    email: "",
+    password: ""
+  };
 
   handleChange = e => {
     this.setState({
@@ -23,68 +24,81 @@ class RegisterLogin extends Component {
     });
   };
 
-  splitName = fullName => {
-    let [firstName, ...lastName] = fullName.split(" ");
-    lastName = lastName.join(" ");
-    return {
-      firstName,
-      lastName
-    };
-  };
-
   handleSubmit = e => {
     e.preventDefault();
 
-    const { firstName, lastName } = this.splitName(this.state.fullName);
-
-    const newUser = {
-      firstName,
-      lastName,
+    const userData = {
       email: this.state.email.toLowerCase(),
-      password: this.state.password,
-      password2: this.state.password2
+      password: this.state.password
     };
 
-    this.props.registerUser(newUser);
+    this.props.registerUser(userData, this.props.history);
   };
 
   render() {
     return (
-      <div className="flex-container">
-        <div className="container">
-          <form className="login-form" onSubmit={e => this.handleSubmit(e)}>
-            <input
-              type="text"
-              name="fullName"
-              value={this.state.fullName}
-              onChange={e => this.handleChange(e)}
-              placeholder="First &amp; Last Name"
-            />
+      <div className="login-form">
+        {/*
+      Heads up! The styles below are necessary for the correct render of this example.
+      You can do same with CSS, the main idea is that all the elements up to the `Grid`
+      below must have a height of 100%.
+    */}
+        <style>{`
+      body > div,
+      body > div > div,
+      body > div > div > div.login-form {
+        height: 100%;
+      }
+    `}</style>
+        <Grid
+          textAlign="center"
+          style={{ height: "100%" }}
+          verticalAlign="middle"
+        >
+          <Grid.Column style={{ maxWidth: 450 }}>
+            <Header as="h2" color="teal" textAlign="center">
+              {/* <Image src="/logo.png" />  */}
+              Log-in to your account
+            </Header>
+            <Form size="large">
+              <Segment stacked>
+                <Form.Input
+                  fluid
+                  icon="user"
+                  iconPosition="left"
+                  placeholder="E-mail address"
+                  type="email"
+                  name="email"
+                  value={this.state.email}
+                  onChange={e => this.handleChange(e)}
+                  placeholder="Email"
+                />
+                <Form.Input
+                  fluid
+                  icon="lock"
+                  iconPosition="left"
+                  type="password"
+                  name="password"
+                  value={this.state.password}
+                  onChange={e => this.handleChange(e)}
+                  placeholder="Password"
+                />
 
-            <input
-              type="email"
-              name="email"
-              value={this.state.email}
-              onChange={e => this.handleChange(e)}
-              placeholder="Email"
-            />
-            <input
-              type="password"
-              name="password"
-              value={this.state.password}
-              onChange={e => this.handleChange(e)}
-              placeholder="Password"
-            />
-            <input
-              type="password"
-              name="password2"
-              value={this.state.password2}
-              onChange={e => this.handleChange(e)}
-              placeholder="Confirm Password"
-            />
-            <button className="btn">Register</button>
-          </form>
-        </div>
+                <Button
+                  color="teal"
+                  fluid
+                  size="large"
+                  onClick={e => this.handleSubmit(e)}
+                >
+                  Login
+                </Button>
+              </Segment>
+            </Form>
+            <Message>
+              New to us? <a href="#">Sign Up</a>
+            </Message>
+          </Grid.Column>
+        </Grid>
       </div>
     );
   }
@@ -94,11 +108,11 @@ const mapState = state => ({
   user: state.user
 });
 
-const mapDispatch = {
-  registerUser
+const actions = {
+  loginUser
 };
 
 export default connect(
   mapState,
-  mapDispatch
-)(RegisterLogin);
+  actions
+)(withRouter(Login));

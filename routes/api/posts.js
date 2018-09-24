@@ -4,9 +4,6 @@ const passport = require("passport");
 
 //Models
 const Post = require("../../models/Post");
-const Profile = require("../../models/Profile");
-
-
 
 //validation
 const validatePostData = require("../../validation/post");
@@ -52,7 +49,7 @@ router.post(
   "/",
   passport.authenticate("jwt", { session: false }),
   (req, res) => {
-    const { text, name, profileImage } = { ...req.body };
+    const { title, text, name, profileImage } = { ...req.body };
 
     const { errors, isValid } = validatePostData(req.body);
 
@@ -62,6 +59,7 @@ router.post(
     console.log(req.user);
 
     const newPost = new Post({
+      title,
       text,
       name,
       profileImage,

@@ -8,6 +8,11 @@ const PostSchema = new Schema({
     ref: "users"
   },
 
+  title: {
+    type: String,
+    required: true
+  },
+
   text: {
     type: String,
     required: true
@@ -50,8 +55,8 @@ const PostSchema = new Schema({
     type: [String]
   },
 
-  slug: {
-    type: String
+  keywords: {
+    type: [String]
   },
 
   /* COMMENTS AND LIKES */

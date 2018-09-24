@@ -3,10 +3,17 @@ import {
   REGISTER_USER,
   LOGIN_USER,
   LOGOUT_USER,
-  DELETE_USER
+  DELETE_USER,
+  SET_CURRENT_USER
 } from "../constants/userConstants";
 
-const initialState = {};
+import isEmpty from "../utils/isEmpty";
+
+export const setcurrentUser = (state, payload) => ({
+  ...state,
+  isAuthenitcated: !isEmpty(payload),
+  user: payload
+});
 
 export const registerUser = (state, payload) => ({
   ...state,
@@ -26,9 +33,11 @@ export const logoutUser = (state, payload) => {
   return state;
 };
 
+const initialState = {};
 export default createReducer(initialState, {
   [REGISTER_USER]: registerUser,
   [LOGIN_USER]: loginUser,
   [DELETE_USER]: deleteUser,
-  [LOGOUT_USER]: logoutUser
+  [LOGOUT_USER]: logoutUser,
+  [SET_CURRENT_USER]: setcurrentUser
 });

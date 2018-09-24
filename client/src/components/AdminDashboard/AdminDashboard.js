@@ -1,10 +1,14 @@
-import React from "react";
-import Sidebar from "../layout/Sidebar";
+import React, { Fragment, Component } from "react";
+import styled from "styled-components";
 
-export default () => {
-  return (
-    <div>
-      <Sidebar />
-    </div>
-  );
-};
+import Layout from "../layout/Layout";
+
+export default class AdminDashboard extends Component {
+  state = {
+    loading: false
+  };
+
+  render() {
+    return <Layout />;
+  }
+}
