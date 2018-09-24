@@ -1,5 +1,6 @@
 import React from "react";
-import { Switch } from "react-router-dom";
+import { Switch, Route } from "react-router-dom";
+import PrivateRoute from "../common/PrivateRoute";
 //components
 import Login from "../auth/Login";
 import AdminDashboard from "../AdminDashboard/AdminDashboard";

@@ -26,8 +26,6 @@ export default class extends Component {
   handleItemClick = (e, { name }) => this.setState({ activeItem: name });
 
   render() {
-    const { activeItem } = this.state;
-
     return (
       <Header>
         <Link to="/dashboard/posts">Posts</Link>

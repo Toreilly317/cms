@@ -15,7 +15,7 @@ const PrivateRoute = ({ component: Component, user, ...rest }) => (
   />
 );
 
-const mapState = (state = {
+const mapState = state => ({
   user: state.user
 });
 
