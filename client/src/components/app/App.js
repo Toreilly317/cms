@@ -4,6 +4,7 @@ import "react-redux-toastr/lib/css/react-redux-toastr.min.css";
 import { Provider } from "react-redux";
 
 import ScrollToTop from "../../utils/scrollToTop";
+import Layout from "../../components/layout/Layout";
 import ReduxToastr from "react-redux-toastr";
 import setAuthToken from "../../utils/setAuthToken";
 import { setCurrentUser } from "../../actions/authActions";
@@ -32,7 +33,9 @@ class App extends Component {
         <Provider store={store}>
           <BrowserRouter>
             <ScrollToTop>
-              <Routes />
+              <Layout>
+                <Routes />
+              </Layout>
             </ScrollToTop>
           </BrowserRouter>
         </Provider>

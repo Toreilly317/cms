@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component, Fragment } from "react";
 import Layout from "../layout/Layout";
 import { Segment } from "semantic-ui-react";
 
@@ -15,9 +15,9 @@ class PostDashboard extends Component {
 
   render() {
     return (
-      <Layout>
+      <Fragment>
         {this.props.posts && <PostList posts={this.props.posts.all} />}
-      </Layout>
+      </Fragment>
     );
   }
 }

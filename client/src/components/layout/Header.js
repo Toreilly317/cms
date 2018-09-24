@@ -1,37 +1,36 @@
 import React, { Component } from "react";
+import Sidebar from "./Sidebar";
 
-import { Link } from "react-router-dom";
 import styled from "styled-components";
 
 const Header = styled.header`
   background: #f1c15d;
+
   font-size: 2em;
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(10rem, 15rem));
+  grid-template-columns: repeat(auto-fill, minmax(min-content, 15rem));
+  grid-template-rows: auto;
   justify-content: center;
   align-content: center;
   align-items: center;
-
-  & > a {
-    font-weight: 800;
-    font-size: 2em;
-    text-decoration: none;
-    color: #2d2d2d;
-  }
 `;
 
 export default class extends Component {
-  state = {};
+  state = {
+    menuOpen: false
+  };
 
-  handleItemClick = (e, { name }) => this.setState({ activeItem: name });
+  toggleMenu = () => {
+    this.setState({
+      menuOpen: !this.state.menuOpen
+    });
+  };
 
   render() {
     return (
       <Header>
-        <Link to="/dashboard/posts">Posts</Link>
-        <Link to="dashboard//pages">Pages</Link>
-        <Link to="dashboard/media">Media</Link>
-        <Link to="dashboard/comments">comments</Link>
+        <div onClick={this.toggleMenu}>Menu</div>
+        <Sidebar isOpen={this.state.menuOpen} toggleMenu={this.toggleMenu} />
       </Header>
     );
   }

@@ -9,6 +9,6 @@ export default class AdminDashboard extends Component {
   };
 
   render() {
-    return <Layout />;
+    return <h1>Dashboard</h1>;
   }
 }
