@@ -1,9 +1,6 @@
 import React from "react";
+import { Container } from "semantic-ui-react";
 
-export default () => {
-  return (
-    <div>
-      <h1>Content goes here</h1>
-    </div>
-  );
+export default props => {
+  return <div>{props.children}</div>;
 };
