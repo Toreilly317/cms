@@ -1,14 +1,32 @@
 import React from "react";
-import { List, Container } from "semantic-ui-react";
+import styled from "styled-components";
+
+const PostListItem = styled.div`
+  display: grid;
+  width: 100%;
+  grid-template-columns: min-content 1fr;
+  grid-template-rows: 1fr;
+  grid-gap: 0.5rem;
+  align-items: center;
+  justify-content: space-between;
+`;
+
+const PostListHeader = styled.div`
+  font-size: 3.2rem;
+`;
+
+const postListSelect = styled.input``;
+
+const PostDates = styled.div``;
 
 export default ({ post }) => {
   return (
-    <List.Item>
-      <List.Icon name="github" size="large" verticalAlign="middle" />
-      <List.Content>
-        <List.Header as="a">{post.title}</List.Header>
-        <List.Description as="a">{post.createdAt}</List.Description>
-      </List.Content>
-    </List.Item>
+    <PostListItem>
+      <div>
+        <input type="checkbox" />
+      </div>
+      <PostListHeader>{post.title}</PostListHeader>
+      PostDates Created At: {new Date(post.createdAt).toLocaleString()}
+    </PostListItem>
   );
 };

@@ -8,16 +8,24 @@ import styled from "styled-components";
 const Layout = styled.div`
   display: grid;
   height: 100vh;
+
   grid-template-columns: 1fr;
   grid-template-rows: 7vh 86vh 7vh;
   align-content: space-between;
+`;
+
+const ContentWrapper = styled.div`
+  display: grid;
+  padding: 2em;
 `;
 
 export default props => {
   return (
     <Layout>
       <Header />
-      <Content>{props.children}</Content>
+      <ContentWrapper>
+        <Content>{props.children}</Content>
+      </ContentWrapper>
       <Footer />
     </Layout>
   );

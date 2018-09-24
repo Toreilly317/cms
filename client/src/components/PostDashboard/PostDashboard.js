@@ -6,6 +6,9 @@ import PostList from "./PostList";
 import { connect } from "react-redux";
 import { getPosts } from "../../actions/postActions";
 
+const PostWidget = props => {
+  return <div>POST WIDGET</div>;
+};
 class PostDashboard extends Component {
   state = {};
 
@@ -16,6 +19,7 @@ class PostDashboard extends Component {
   render() {
     return (
       <Fragment>
+        <PostWidget />
         {this.props.posts && <PostList posts={this.props.posts.all} />}
       </Fragment>
     );

@@ -2,5 +2,6 @@
 
 add permission roles. This will most likely be best suited for express middleware
 research charting libraries Charts.js chartist etc
+Fix the menu "animation" 
 
 
